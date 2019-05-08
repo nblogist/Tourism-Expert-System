@@ -111,9 +111,9 @@ write(Question),
 write('? '),
 read(Response),
 nl,
-( (Response == yes ; Response == y)
-->
-assert(yes(Question)) ;
+( 
+    (Response == yes ; Response == y)->
+    assert(yes(Question)) ;
 assert(no(Question)), fail).
 
 :- dynamic yes/1,no/1.
