@@ -1,19 +1,22 @@
-read(INPUT),
+
+(Region \='n')->
 (
-(INPUT=1)->power;
-(INPUT=2)->sound;
-(INPUT=3)->connection;
-(INPUT=4)->freeze;
-(INPUT=5)->screen_blank;
-(INPUT=6)->restarts;
-(INPUT=7)->keyboard;
-(INPUT=8)->mouse;
-(INPUT=9)->printer;
-(INPUT=10)->slow;
-(INPUT=11)->browser_page;
-(INPUT=12)->Hw_sw;
-(INPUT=13)->blue_screen;
-(INPUT=14)->dll_missing;
-(INPUT=15)->Popup_ads;
-write('wrong input')
-).
+(Region='a')->findall(X,region(X,'Asia'),TList);
+(Region='u')->findall(X,region(X,'USA'),TList);
+(Region='e')->findall(X,region(X,'Europe'),TList);
+(Region='b')->findall(X,region(X,'Arabia'),TList);
+(Region='o')->findall(X,region(X,'Ocenia'),TList);
+write()
+),
+write(TList).
+
+
+
+(
+(RoomType='s')->(TotalBudget is TotalBudget - (20*NumofDays));
+(RoomType='t')->TotalBudget is TotalBudget - (40*NumofDays);
+(RoomType='d')->TotalBudget is TotalBudget - (10*NumofDays);
+(RoomType='q')->TotalBudget is TotalBudget - (50*NumofDays);
+(RoomType='k')->TotalBudget is TotalBudget - (100*NumofDays);
+write('Wrong RoomType')
+),
