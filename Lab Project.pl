@@ -197,15 +197,13 @@ write('What kind of place do you like to vist?
  d for, do not care!'),
 read(TypeofPlace),nl,nl,
 write('Do you have a specific region in mind? Y/N'), read(YN),
-(YN='y')->(write('
-Enter 
-a for Asia; 
-u for The United States; 
-e for Europe; 
-b for Arabia; 
-o for Oceania: '),
-read(Region);
-Region='n',nl,nl),
+(YN=='y')->write('
+Enter A for Asia; 
+U for The United States; 
+E for Europe; 
+B for Arabia; 
+O for Oceania: '),nl,nl,
+read(Region);Region='n',nl,nl,
 write('What weather do you prefer? 
 c for Cold; 
 h for Hot; 
@@ -260,13 +258,13 @@ write(RegionList),
 (TimeofTravel='n')->findall(X,nightLife(X),NightList),
 
 %SEPARATION on TypeofPlace
-(TimeofTravel='h')->findall(X,historical(X),NightList),
-(TimeofTravel='n')->findall(X,nature(X),NightList),
-(TimeofTravel='m')->findall(X,music(X),NightList),
-(TimeofTravel='c')->findall(X,cultural(X),NightList),
-(TimeofTravel='r')->findall(X,religious(X),NightList),
-(TimeofTravel='b')->findall(X,bussinesshub(X),NightList),
-(TimeofTravel='l')->findall(X,luxury(X),NightList).
+(TypeofPlace='h')->findall(X,historical(X),TypeofPlaceList),
+(TypeofPlace='n')->findall(X,nature(X),TypeofPlaceList),
+(TypeofPlace='m')->findall(X,music(X),TypeofPlaceList),
+(TypeofPlace='c')->findall(X,cultural(X),TypeofPlaceList),
+(TypeofPlace='r')->findall(X,religious(X),TypeofPlaceList),
+(TypeofPlace='b')->findall(X,bussinesshub(X),TypeofPlaceList),
+(TypeofPlace='l')->findall(X,luxury(X),TypeofPlaceList).
 
 %SEPARATION ON WEATHER
 (Temp='c')->findall(X,weather(X,'C'),WeatherList),
@@ -277,7 +275,8 @@ write(RegionList),
 inter(BudgetList, RegionList, X1),
 inter(X1, FoodList, X2),
 inter(X2, NightList, X3),
-inter(X3, WeatherList, FinalList),
+inter(X3, TypeofPlaceList, X4),
+inter(X4, WeatherList, FinalList),
 nl,nl,nl,
 write('The Recommended List of Cities according to your answers is : '),nl,nl,
 write(FinalList).
