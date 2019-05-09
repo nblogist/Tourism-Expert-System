@@ -21,7 +21,8 @@ cost('New Orleans',100).
 cost('Tokyo',494).
 cost('Istanbul',33).
 cost('Kuala Lumpur',73).
-cost('Singapore',468).
+cost('Singapore',1000).
+cost('TESTSingapore',1000).
 cost('New York',1553).
 cost('Dubai',2900).
 cost('Paris',1550).
@@ -40,6 +41,7 @@ weather('Tokyo','C').
 weather('Istanbul','C').
 weather('Kuala Lumpur','H').
 weather('Singapore','H').
+weather('TESTSingapore','H').
 weather('New York','N').
 weather('Dubai','H').
 weather('Paris','N').
@@ -63,6 +65,8 @@ nightLife('Hong Kong').
 nightLife('Karachi').
 nightLife('Lahore').
 nightLife('Sydney').
+nightLife('TESTSingapore').
+nightLife('Singapore').
 
 %Region
 region('Seoul', 'Asia').
@@ -71,6 +75,7 @@ region('Tokyo','Asia').
 region('Istanbul','Asia').
 region('Kuala Lumpur', 'Asia').
 region('Singapore', 'Asia').
+region('TESTSingapore', 'Asia').
 region('New York', 'USA').
 region('Dubai', 'Arab').
 region('Paris','Europe').
@@ -86,6 +91,7 @@ region('Sydney','Oceania').
 food('Tokyo').
 food('Istanbul').
 food('Singapore').
+food('TESTSingapore').
 food('New York').
 food('Paris').
 food('Bangkok').
@@ -123,9 +129,17 @@ cultural('Singapore').
 bussinesshub('Singapore').
 luxury('Singapore').
 
+religious('TESTSingapore').
+nature('TESTSingapore').
+cultural('TESTSingapore').
+bussinesshub('TESTSingapore').
+luxury('TESTSingapore').
+
+
 luxury('New York').
 bussinesshub('New York').
 music('New York').
+
 
 modern('Dubai').
 architecture('Dubai').
@@ -196,14 +210,14 @@ write('What kind of place do you like to vist?
  l for Luxury; 
  d for, do not care!'),
 read(TypeofPlace),nl,nl,
-write('Do you have a specific region in mind? Y/N'), read(YN),
-(YN=='y')->write('
+write('What Region do you have in mind? '), YN='y',
+(YN=='y')->(write('
 Enter A for Asia; 
 U for The United States; 
 E for Europe; 
 B for Arabia; 
 O for Oceania: '),nl,nl,
-read(Region);Region='n',nl,nl,
+read(Region);Region='n'),nl,nl,
 write('What weather do you prefer? 
 c for Cold; 
 h for Hot; 
@@ -213,34 +227,19 @@ write('What is your prefered time of travel? D for Day; N for night'), read(Time
 write('What is your estimated budget in USD?'), read(TotalBudget),nl,nl,
 write('How many days you have to tour? '), read(NumofDays),nl,nl,
 write('Specify number of people? '), read(NumofPeople),nl,nl,
-write('What do you prefer? 
-s for Single Bed Room; 
-t for Twin Bed Room; 
-d for Dorm Rooms; 
-q for Queen Room; 
-k for King Room '),nl,nl,
-read(RoomType),
-write(RoomType),
-(
-(RoomType='s')->TotalBudget is TotalBudget - (20*NumofDays);
-(RoomType='t')->TotalBudget is TotalBudget - (40*NumofDays);
-(RoomType='d')->TotalBudget is TotalBudget - (10*NumofDays);
-(RoomType='q')->TotalBudget is TotalBudget - (50*NumofDays);
-(RoomType='k')->TotalBudget is TotalBudget - (100*NumofDays);
-write('Wrong RoomType')
-),
+
 
 %SEPARATION ON BUDGET
 Temp_budget is TotalBudget/NumofPeople,
 Final_budget is Temp_budget/NumofDays,
 write('Your Final Budget per Person per Day is (Room Cost included):'),nl,nl,
 write(Final_budget),
-findall(X, (cost(X,Y),Y<Final_budget), BudgetList), 
+findall(X, (cost(X,Y),Y=<Final_budget), BudgetList), 
 write('List of Possible Cities'),nl,nl,
 write(BudgetList),nl,nl,
 
 %SEPARATION ON REGION
-(YN = 'n')->
+(YN == 'y')->
 (
 (Region='a')->findall(X,region(X,'Asia'),RegionList);
 (Region='u')->findall(X,region(X,'USA'),RegionList);
@@ -249,34 +248,21 @@ write(BudgetList),nl,nl,
 (Region='o')->findall(X,region(X,'Ocenia'),RegionList);
 write()
 ),
-write(RegionList),
+write('REGIONLIST'),
+write(RegionList),nl,nl,nl,
 
 %SEPARATION ON FOODIE
 (NumofFood>5)->findall(X,food(X),FoodList),
+write('FoodList'),
+write(FoodList),nl,nl,nl,
 
 %SEPARATION ON TimeofTravel
 (TimeofTravel='n')->findall(X,nightLife(X),NightList),
+write('NightList'),
+write(NightList),nl,nl,nl,
 
-%SEPARATION on TypeofPlace
-(TypeofPlace='h')->findall(X,historical(X),TypeofPlaceList),
-(TypeofPlace='n')->findall(X,nature(X),TypeofPlaceList),
-(TypeofPlace='m')->findall(X,music(X),TypeofPlaceList),
-(TypeofPlace='c')->findall(X,cultural(X),TypeofPlaceList),
-(TypeofPlace='r')->findall(X,religious(X),TypeofPlaceList),
-(TypeofPlace='b')->findall(X,bussinesshub(X),TypeofPlaceList),
-(TypeofPlace='l')->findall(X,luxury(X),TypeofPlaceList).
-
-%SEPARATION ON WEATHER
-(Temp='c')->findall(X,weather(X,'C'),WeatherList),
-(Temp='h')->findall(X,weather(X,'H'),WeatherList),
-(Temp='n')->findall(X,weather(X,'N'),WeatherList),
-
-%COMBINING ALL THE LISTS
 inter(BudgetList, RegionList, X1),
 inter(X1, FoodList, X2),
 inter(X2, NightList, X3),
-inter(X3, TypeofPlaceList, X4),
-inter(X4, WeatherList, FinalList),
-nl,nl,nl,
-write('The Recommended List of Cities according to your answers is : '),nl,nl,
-write(FinalList).
+write('FINAL LIST'),nl,nl,
+write(X3).
