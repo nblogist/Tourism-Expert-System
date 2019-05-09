@@ -1,20 +1,3 @@
-city1:-write('Seoul').
-city2:-write('New Orleans').
-city3:-write('Tokyo').
-city4:-write('Istanbul').
-city5:-write('Kuala Lumpur').
-city6:-write('Singapore').
-city7:-write('New York').
-city8:-write('Dubai').
-city9:-write('Paris').
-city10:-write('London').
-city11:-write('Bangkok').
-city12:-write('Venice').
-city13:-write('Hong Kong').
-city14:-write('Karachi').
-city15:-write('Lahore').
-city16:-write('Sydney').
-
 %Cost Data
 cost('Seoul',477).
 cost('New Orleans',100).
