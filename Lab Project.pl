@@ -193,14 +193,19 @@ write('What kind of place do you like to vist?
  l for Luxury; 
  d for, do not care!'),
 read(TypeofPlace),nl,nl,
-write('What Region do you have in mind? '), YN='y',
-(YN=='y')->(write('
-Enter A for Asia; 
-U for The United States; 
-E for Europe; 
-B for Arabia; 
-O for Oceania: '),nl,nl,
-read(Region);Region='n'),nl,nl,
+write('Do you have a Region in mind? '), 
+read(YN),
+( 
+    (YN=='y')
+    ->write('Enter A for Asia; 
+      U for The United States; 
+      E for Europe; 
+      B for Arabia; 
+      O for Oceania: '),read(Region)
+      ;Region='n'
+
+)
+  ,nl,nl,
 write('What weather do you prefer? 
 c for Cold; 
 h for Hot; 
@@ -215,11 +220,8 @@ write('Specify number of people? '), read(NumofPeople),nl,nl,
 %SEPARATION ON BUDGET
 Temp_budget is TotalBudget/NumofPeople,
 Final_budget is Temp_budget/NumofDays,
-write('Your Final Budget per Person per Day is (Room Cost included):'),nl,nl,
-write(Final_budget),
 findall(X, (cost(X,Y),Y=<Final_budget), BudgetList), 
-write('List of Possible Cities'),nl,nl,
-write(BudgetList),nl,nl,
+
 
 %SEPARATION ON REGION
 (YN == 'y')->
@@ -231,21 +233,16 @@ write(BudgetList),nl,nl,
 (Region='o')->findall(X,region(X,'Ocenia'),RegionList);
 write()
 ),
-write('REGIONLIST'),
-write(RegionList),nl,nl,nl,
 
 %SEPARATION ON FOODIE
 (NumofFood>5)->findall(X,food(X),FoodList),
-write('FoodList'),
-write(FoodList),nl,nl,nl,
 
 %SEPARATION ON TimeofTravel
 (TimeofTravel='n')->findall(X,nightLife(X),NightList),
-write('NightList'),
-write(NightList),nl,nl,nl,
 
 inter(BudgetList, RegionList, X1),
 inter(X1, FoodList, X2),
-inter(X2, NightList, X3),
+inter(X2, NightList, FinalList),
 write('FINAL LIST'),nl,nl,
-write(X3).
+write('The Recommended List of Cities according to your answers is : '),nl,nl,
+write(FinalList).
